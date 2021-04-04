@@ -1,17 +1,15 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GrowthPicturesForm } from '../components/GrowthPicturesForm';
-import { firebase } from '../firebase';
-import { UserContext } from '../providers/UserProvider';
-import { Timeline } from '../components/Timeline';
+import React, { useEffect, useState } from 'react';
+import { GrowthPicturesForm } from './GrowthPicturesForm';
+import { Timeline } from './Timeline';
+import { withFirebase } from '../../Firebase';
 
-export const GrowthPictures = () => {
+const GrowthPicturesBase = (props) => {
 
-    const user = useContext(UserContext);
     const [pictures, setPictures] = useState([]);
 
     useEffect(() => {
-        firebase
-      .firestore()
+        props.firebase
+      .firestore
       .collection("lucy-growth-pictures")
       .orderBy('date')
       .onSnapshot((snapshot) => {
@@ -19,15 +17,13 @@ export const GrowthPictures = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("All data in 'lucy-growth-pictures' collection", data);
         setPictures(data);
       })
-    }, [])
+    }, [props.firebase])
 
-    console.log('user is', user);
     return (
         <>
-        {user && user.admin && <GrowthPicturesForm />}
+        <GrowthPicturesForm />
         <div>
           Month: <a href="#March-2021">March 2021</a>
           
@@ -38,3 +34,5 @@ export const GrowthPictures = () => {
         </>
     )
 }
+
+export const GrowthPictures = withFirebase(GrowthPicturesBase);

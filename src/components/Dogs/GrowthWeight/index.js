@@ -1,15 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { GrowthWeightForm } from '../components/GrowthWeightForm';
-import { LineChart } from '../components/LineChart';
-import { UserContext } from '../providers/UserProvider';
-import { firebase } from '../firebase';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import { withFirebase } from '../../Firebase';
+import { GrowthWeightForm } from './GrowthWeightForm';
+import { LineChart } from './LineChart';
 
-export const GrowthWeight = () => {
-    const user = useContext(UserContext)
-    console.log('user is', user);
-
+const GrowthWeightBase = (props) => {
     const ChartContainer = styled.div`
         & svg {
             overflow: unset !important;
@@ -19,8 +15,8 @@ export const GrowthWeight = () => {
     const [weights, setWeights] = useState([]);
 
     useEffect(() => {
-        firebase
-      .firestore()
+        props.firebase
+      .firestore
       .collection("lucy-growth-weight")
       .orderBy('date')
       .onSnapshot((snapshot) => {
@@ -28,19 +24,18 @@ export const GrowthWeight = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("All data in 'lucy-growth-weight' collection", data);
         setWeights(data);
       })
-    }, [])
-
-    console.log('weights are', weights);
+    }, [props.firebase])
 
     return (
         <>
-        {user && user.admin && <GrowthWeightForm />}
+        <GrowthWeightForm />
         <ChartContainer>
             <LineChart data={weights.map(weight => ({ x: new Date(dayjs.unix(weight.date)), y: weight.weight }))}/>
         </ChartContainer>
         </>
     )
 }
+
+export default withFirebase(GrowthWeightBase);

@@ -9,11 +9,10 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import DayjsUtils from '@date-io/dayjs';
-import { firebase } from '../firebase';
+import { withFirebase } from '../../Firebase';
 
-
-export const GrowthWeightForm = () => {
-    const firestore = firebase.firestore();
+const GrowthWeightFormBase = (props) => {
+    const firestore = props.firebase.firestore;
     const [open, setOpen] = React.useState(false);
     const [weight, setWeight] = React.useState('');
     const [weightError, setWeightError] = React.useState(false);
@@ -97,3 +96,5 @@ export const GrowthWeightForm = () => {
       </MuiPickersUtilsProvider>
   );
 }
+
+export const GrowthWeightForm = withFirebase(GrowthWeightFormBase);

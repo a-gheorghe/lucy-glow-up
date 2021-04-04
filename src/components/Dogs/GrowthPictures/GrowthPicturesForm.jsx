@@ -10,12 +10,11 @@ import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
 import DayjsUtils from '@date-io/dayjs';
-import { firebase } from '../firebase';
+import { withFirebase } from '../../Firebase';
 
-
-export const GrowthPicturesForm = () => {
-    const firestore = firebase.firestore();
-    const storageRef = firebase.storage();
+const GrowthPicturesFormBase = (props) => {
+    const firestore = props.firebase.firestore;
+    const storageRef = props.firebase.storage;
     const [open, setOpen] = React.useState(false);
     const [selectedFile, setSelectedFile] = useState()
     const [selectedFileDescription, setSelectedFileDescription] = useState('');
@@ -121,3 +120,5 @@ export const GrowthPicturesForm = () => {
       </MuiPickersUtilsProvider>
   );
 }
+
+export const GrowthPicturesForm = withFirebase(GrowthPicturesFormBase);

@@ -1,0 +1,10 @@
+export const LANDING = '/';
+export const SIGN_UP = '/signup';
+export const SIGN_IN = '/signin';
+export const HOME = '/home';
+export const ACCOUNT = '/account';
+export const ADMIN = '/admin';
+export const PASSWORD_FORGET = '/pw-forget';
+export const DOGS = '/dogs';
+export const LUCY_GROWTH_PICTURES = '/dogs/lucy/growth-pictures';
+export const LUCY_GROWTH_WEIGHT = '/dogs/lucy/growth-weight';
