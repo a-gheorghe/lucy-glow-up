@@ -5,6 +5,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField'
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import dayjs from 'dayjs';
 import { v4 as uuidv4 } from 'uuid';
@@ -64,9 +66,9 @@ const GrowthWeightFormBase = (props) => {
     }
   return (
     <MuiPickersUtilsProvider utils={DayjsUtils}>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Add new weight entry
-      </Button>
+<Fab color="primary" aria-label="add" style={{ position: 'fixed', bottom: '30px', right: '30px', zIndex: '100'}} onClick={handleClickOpen}>
+  <AddIcon />
+</Fab>  
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add weight entry</DialogTitle>
         <DialogContent>
