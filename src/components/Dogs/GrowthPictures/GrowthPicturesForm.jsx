@@ -58,11 +58,7 @@ const GrowthPicturesFormBase = (props) => {
     }
 
   const addPhoto = () => {
-      console.log("FileName", selectedFile)
-      console.log('storageRef is', storageRef);
-      const uploadTask = storageRef.ref('/lucy-growth-pictures').child(selectedFile.name).put(selectedFile);
-      console.log('uploadTask is', uploadTask);
-  
+      const uploadTask = storageRef.ref('/lucy-growth-pictures').child(selectedFile.name).put(selectedFile);  
       uploadTask.on('state_changed',
           (snapshot) => {
               const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
