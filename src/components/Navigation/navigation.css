@@ -1,0 +1,12 @@
+.nav-header {
+  background-color: var(--hot-pink);
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.unordered-list {
+  min-width: 300px;
+  list-style: none;
+  padding-top: 40px;
+}

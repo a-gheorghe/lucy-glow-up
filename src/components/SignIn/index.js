@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
- 
-import { SignUpLink } from '../SignUp';
-import { withFirebase } from '../Firebase';
-import { PasswordForgetLink } from '../PasswordForget';
-import * as ROUTES from '../../constants/routes';
- 
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
+import { SignUpLink } from "../SignUp";
+import { withFirebase } from "../Firebase";
+import { PasswordForgetLink } from "../PasswordForget";
+import * as ROUTES from "../../constants/routes";
+import * as firebaseui from "firebaseui";
+
 const SignInPage = () => (
   <div>
     <h1>SignIn</h1>
@@ -16,17 +17,29 @@ const SignInPage = () => (
 );
 
 const INITIAL_USER_STATE = {
-  email: '',
-  password: '',
-}
- 
-const SignInFormBase = () => {
+  email: "",
+  password: "",
+};
+
+const SignInFormBase = ({ firebase }) => {
+  useEffect(() => {
+    const ui =
+      firebaseui.auth.AuthUI.getInstance() ||
+      new firebaseui.auth.AuthUI(firebase.auth);
+    ui.start("#firebaseui-auth-container", {
+      signInOptions: [
+        // List of OAuth providers supported.
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      ],
+    });
+  }, [firebase.auth, firebase.auth.GoogleAuthProvider.PROVIDER_ID]);
+
   const history = useHistory();
   const [user, setUser] = useState(INITIAL_USER_STATE);
   const [error, setError] = useState(null);
   const { email, password } = user;
 
-  const onSubmit = event => {
+  const onSubmit = (event) => {
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
       .then(() => {
@@ -34,22 +47,23 @@ const SignInFormBase = () => {
         setError(null);
         history.push(ROUTES.HOME);
       })
-      .catch(error => {
+      .catch((error) => {
         setError(error);
       });
- 
+
     event.preventDefault();
   };
- 
-    const onChange = event => {
-      setUser({
-        [event.target.name]: event.target.value
-      });
-    };
 
-    const isInvalid = user.password === '' || user.email === '';
- 
-    return (
+  const onChange = (event) => {
+    setUser({
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const isInvalid = user.password === "" || user.email === "";
+
+  return (
+    <>
       <form onSubmit={onSubmit}>
         <input
           name="email"
@@ -68,13 +82,15 @@ const SignInFormBase = () => {
         <button disabled={isInvalid} type="submit">
           Sign In
         </button>
- 
+
         {error && <p>{error.message}</p>}
       </form>
-    );
-  }
- 
+      <div id="firebaseui-auth-container"></div>
+    </>
+  );
+};
+
 const SignInForm = withFirebase(SignInFormBase);
 export default SignInPage;
- 
+
 export { SignInForm };
