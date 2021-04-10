@@ -1,3 +1,10 @@
+:root {
+  --hot-pink: #e3196e;
+  --ivory: #f1e9db;
+  --slate: #5b5b5b;
+  --candy: #f69291;
+}
+
 .timeline-container {
   display: flex;
   flex-direction: column;
@@ -7,7 +14,7 @@
 }
 .timeline-container::after {
   background-color: black;
-  content: '';
+  content: "";
   position: absolute;
   width: 4px;
   height: 100%;
@@ -34,5 +41,4 @@
   border: 3px solid black;
   left: -9px;
   z-index: 100;
-
 }
