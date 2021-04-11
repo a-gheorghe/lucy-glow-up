@@ -3,19 +3,17 @@ import { Link } from "react-router-dom";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
-import { AuthUserContext } from "../Session";
 
 import * as ROUTES from "../../constants/routes";
 import SimpleMenu from "./Menu";
 import "./navigation.css";
+import { useUser } from "../../contexts/userContext";
 
-const Navigation = () => (
-  <div>
-    <AuthUserContext.Consumer>
-      {(authUser) => (authUser ? <NavigationAuth /> : <NavigationNonAuth />)}
-    </AuthUserContext.Consumer>
-  </div>
-);
+const Navigation = () => {
+  const user = useUser().user;
+  console.log("user is nav", user);
+  return <div>{user ? <NavigationAuth /> : <NavigationNonAuth />}</div>;
+};
 
 const NavigationAuth = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);

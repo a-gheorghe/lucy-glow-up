@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { withFirebase } from "../Firebase";
+import firebase from "../../firebase/clientApp";
 
-const AdminPage = (props) => {
+const AdminPage = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     setLoading(true);
-    props.firebase.firestore.collection(
-      "users".onSnapshot((snapshot) => {
+    firebase
+      .firestore()
+      .collection("users")
+      .onSnapshot((snapshot) => {
         const data = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setLoading(false);
         setUsers(data);
-      })
-    );
-  }, [props.firebase.firestore]);
+      });
+  }, []);
 
   return (
     <div>
@@ -47,4 +48,4 @@ const UserList = ({ users }) => (
   </ul>
 );
 
-export default withFirebase(AdminPage);
+export default AdminPage;

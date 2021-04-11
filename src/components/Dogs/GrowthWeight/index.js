@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import { withFirebase } from "../../Firebase";
 import { GrowthWeightForm } from "./GrowthWeightForm";
 import { LineChart } from "./LineChart";
+import firebase from "../../../firebase/clientApp";
 
 const GrowthWeightBase = (props) => {
   const ChartContainer = styled.div`
@@ -15,7 +15,8 @@ const GrowthWeightBase = (props) => {
   const [weights, setWeights] = useState([]);
 
   useEffect(() => {
-    props.firebase.firestore
+    firebase
+      .firestore()
       .collection("lucy-growth-weight")
       .orderBy("date")
       .onSnapshot((snapshot) => {
@@ -42,4 +43,4 @@ const GrowthWeightBase = (props) => {
   );
 };
 
-export default withFirebase(GrowthWeightBase);
+export default GrowthWeightBase;

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { GrowthPicturesForm } from "./GrowthPicturesForm";
 import { Timeline } from "./Timeline";
-import { withFirebase } from "../../Firebase";
+import firebase from "../../../firebase/clientApp";
 
-const GrowthPicturesBase = (props) => {
+const GrowthPicturesBase = () => {
   const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
-    props.firebase.firestore
+    firebase
+      .firestore()
       .collection("lucy-growth-pictures")
       .orderBy("date")
       .onSnapshot((snapshot) => {
@@ -17,7 +18,7 @@ const GrowthPicturesBase = (props) => {
         }));
         setPictures(data);
       });
-  }, [props.firebase]);
+  }, []);
 
   return (
     <>
@@ -32,4 +33,4 @@ const GrowthPicturesBase = (props) => {
   );
 };
 
-export const GrowthPictures = withFirebase(GrowthPicturesBase);
+export const GrowthPictures = GrowthPicturesBase;
