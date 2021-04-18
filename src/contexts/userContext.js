@@ -3,25 +3,38 @@ import firebase from "../firebase/clientApp";
 
 export const UserContext = createContext();
 
-export default function UserContextComp({ children }) {
+export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true); // Helpful, to update the UI accordingly.
 
   useEffect(() => {
+    console.log('firebase.auth', firebase.auth());
     // Listen authenticated user
     const unsubscriber = firebase.auth().onAuthStateChanged(async (user) => {
+      console.log('auth state changed', user)
       try {
         if (user) {
-          // User is signed in.
-          const { uid } = user;
-          // You could also look for the user doc in your Firestore (if you have one):
-          const userDoc = await firebase.firestore().doc(`users/${uid}`).get();
-          if (userDoc.exists) {
-            setUser(userDoc.data());
-          } else {
-            setUser(null);
+          const contextUser = {
+            id: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL
           }
-        } else setUser(null);
+          const usersRef = firebase.firestore().collection('users').doc(user.uid)
+          await usersRef.get()
+            .then((docSnapshot) => {
+              if (docSnapshot.exists) {
+                usersRef.onSnapshot((doc) => {
+                  setUser(doc.data())
+                });
+              } else {
+                usersRef.set(contextUser) // create the document
+                setUser(contextUser)
+              }
+            })
+        } else {
+          setUser(null);
+        }
       } catch (error) {
         // Most probably a connection error. Handle appropriately.
       } finally {
@@ -41,4 +54,4 @@ export default function UserContextComp({ children }) {
 }
 
 // Custom hook that shorthands the context!
-export const useUser = () => useContext(UserContext);
+export const useUserContext = () => useContext(UserContext);

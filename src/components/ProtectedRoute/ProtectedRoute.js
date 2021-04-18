@@ -1,13 +1,15 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import useUser from "../../contexts/userContext";
+import { useUserContext } from "../../contexts/userContext";
 
 export const ProtectedRoute = ({ component: Component, roles, ...rest }) => {
-  const user = useUser().user;
+  const user = useUserContext().user;
+  console.log('user in protected route', user);
   return (
     <Route
       {...rest}
       render={(props) => {
+
         if (!user) {
           // not logged in so redirect to login page with the return url
           return (

@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { GrowthWeightForm } from "./GrowthWeightForm";
 import { LineChart } from "./LineChart";
 import firebase from "../../../firebase/clientApp";
-import { useUser } from "../../../contexts/userContext";
+import { useUserContext } from "../../../contexts/userContext";
 import { isAdmin } from "../../../utils/isAdmin";
 
 const GrowthWeightBase = (props) => {
@@ -14,7 +14,7 @@ const GrowthWeightBase = (props) => {
     }
   `;
 
-  const user = useUser().user;
+  const user = useUserContext().user;
   const [weights, setWeights] = useState([]);
 
   useEffect(() => {

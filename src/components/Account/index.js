@@ -1,10 +1,9 @@
 import React from "react";
 
-import { useUser } from "../../contexts/userContext";
+import { useUserContext } from "../../contexts/userContext";
 
 const AccountPage = () => {
-  const user = useUser().user;
-  console.log("user is", user);
+  const user = useUserContext().user;
   return (
     <>
       <div> This is the account page </div>

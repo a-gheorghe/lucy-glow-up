@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Drawer from "@material-ui/core/Drawer";
 import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -7,11 +7,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import * as ROUTES from "../../constants/routes";
 import SimpleMenu from "./Menu";
 import "./navigation.css";
-import { useUser } from "../../contexts/userContext";
+import { useUserContext } from "../../contexts/userContext";
+import firebase from "../../firebase/clientApp";
+
 
 const Navigation = () => {
-  const user = useUser().user;
-  console.log("user is nav", user);
+  const user = useUserContext().user;
   return <div>{user ? <NavigationAuth /> : <NavigationNonAuth />}</div>;
 };
 
@@ -32,10 +33,10 @@ const NavigationAuth = () => {
             <Link to={ROUTES.LANDING}>Landing</Link>
           </li>
           <li>
-            <Link to={ROUTES.HOME}>Home</Link>
+            <Link to={ROUTES.DOGS}>Dogs</Link>
           </li>
           <li>
-            <Link to={ROUTES.DOGS}>Dogs</Link>
+            <Link to={ROUTES.TRAINING}>Training</Link>
           </li>
         </ul>
       </Drawer>
@@ -45,7 +46,22 @@ const NavigationAuth = () => {
 };
 
 const NavigationNonAuth = () => {
+  const history = useHistory();
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({
+    prompt: 'select_account'
+  });
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const onSignIn = () => {
+    firebase.auth().signInWithPopup(provider)
+      .then((googleUser) => {
+        console.log('user after signin', googleUser);
+        // history.push(ROUTES.DOGS)
+      })
+      .catch(() => {
+        // history.push(ROUTES.LANDING)
+      })
+  }
 
   return (
     <div className="nav-header">
@@ -67,14 +83,11 @@ const NavigationNonAuth = () => {
         </ul>
       </Drawer>
       <Button
-        color="primary"
-        variant="outlined"
-        component={Link}
-        to={ROUTES.SIGN_IN}
+        onClick={onSignIn}
       >
-        Sign in
-      </Button>
-    </div>
+        SIGN IN
+        </Button>
+    </div >
   );
 };
 

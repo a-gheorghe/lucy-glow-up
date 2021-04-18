@@ -1,3 +1,3 @@
 export const isAdmin = (user) => {
-  return user && user.roles.includes("admin");
+  return user && user.role === "admin";
 };
