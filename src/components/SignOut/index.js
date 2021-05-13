@@ -11,13 +11,12 @@ const SignOutButton = () => {
       .auth()
       .signOut()
       .then(() => {
-        history.push(ROUTES.SIGN_IN);
+        history.push(ROUTES.HOME);
       })
       .catch((error) => {
         // An error happened.
       });
   };
-  console.log("user is", useUser());
   return (
     <button type="button" onClick={signOut}>
       Sign Out

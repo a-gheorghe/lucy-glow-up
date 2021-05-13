@@ -13,7 +13,6 @@ const GrowthWeightBase = (props) => {
   `;
 
   const [weights, setWeights] = useState([]);
-
   useEffect(() => {
     firebase
       .firestore()

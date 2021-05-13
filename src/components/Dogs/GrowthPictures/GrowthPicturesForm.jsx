@@ -149,6 +149,7 @@ const GrowthPicturesFormBase = () => {
                   ? selectedFileDescription
                   : "preview"
               }
+              loading="lazy"
             />
           )}
         </DialogContent>

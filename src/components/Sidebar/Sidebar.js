@@ -125,10 +125,6 @@ const activeStyle = {
 
 const authNav = [
   {
-    link: ROUTES.LANDING,
-    title: "Landing",
-  },
-  {
     link: ROUTES.HOME,
     title: "Home",
   },

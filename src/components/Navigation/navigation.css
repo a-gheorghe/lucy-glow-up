@@ -1,8 +1,8 @@
 .nav-header {
-  background-color: var(--hot-pink);
   display: flex;
   justify-content: space-between;
   height: 60px;
+  border-bottom: 1px solid black;
 }
 
 .unordered-list {
