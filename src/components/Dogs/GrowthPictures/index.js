@@ -25,10 +25,7 @@ const GrowthPicturesBase = () => {
 
   return (
     <>
-      {isAdmin(user) && <GrowthPicturesForm />}
-      <div>
-        Month: <a href="#March-2021">March 2021</a>
-      </div>
+      <GrowthPicturesForm />
       <div style={{ width: "100vw", position: "relative", margin: "0 auto" }}>
         <Timeline data={pictures} />
       </div>

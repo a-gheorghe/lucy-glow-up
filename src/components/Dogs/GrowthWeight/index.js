@@ -16,7 +16,6 @@ const GrowthWeightBase = (props) => {
 
   const user = useUser().user;
   const [weights, setWeights] = useState([]);
-
   useEffect(() => {
     firebase
       .firestore()

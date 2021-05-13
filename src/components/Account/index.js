@@ -4,7 +4,6 @@ import { useUser } from "../../contexts/userContext";
 
 const AccountPage = () => {
   const user = useUser().user;
-  console.log("user is", user);
   return (
     <>
       <div> This is the account page </div>
