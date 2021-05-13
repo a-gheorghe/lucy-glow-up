@@ -4,6 +4,8 @@ import dayjs from "dayjs";
 import { GrowthWeightForm } from "./GrowthWeightForm";
 import { LineChart } from "./LineChart";
 import firebase from "../../../firebase/clientApp";
+import { useUser } from "../../../contexts/userContext";
+import { isAdmin } from "../../../utils/isAdmin";
 
 const GrowthWeightBase = (props) => {
   const ChartContainer = styled.div`
@@ -12,6 +14,7 @@ const GrowthWeightBase = (props) => {
     }
   `;
 
+  const user = useUser().user;
   const [weights, setWeights] = useState([]);
   useEffect(() => {
     firebase
@@ -29,7 +32,7 @@ const GrowthWeightBase = (props) => {
 
   return (
     <>
-      <GrowthWeightForm />
+      {isAdmin(user) && <GrowthWeightForm />}
       <ChartContainer>
         <LineChart
           data={weights.map((weight) => ({

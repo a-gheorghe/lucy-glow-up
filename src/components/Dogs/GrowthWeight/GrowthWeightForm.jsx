@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import DayjsUtils from "@date-io/dayjs";
 import firebase from "../../../firebase/clientApp";
 
-const GrowthWeightFormBase = () => {
+export const GrowthWeightForm = () => {
   const firestore = firebase.firestore();
   const [open, setOpen] = React.useState(false);
   const [weight, setWeight] = React.useState("");
@@ -117,5 +117,3 @@ const GrowthWeightFormBase = () => {
     </MuiPickersUtilsProvider>
   );
 };
-
-export const GrowthWeightForm = GrowthWeightFormBase;
