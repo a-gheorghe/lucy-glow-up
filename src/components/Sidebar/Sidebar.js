@@ -31,21 +31,6 @@ const SidebarHeader = styled.div`
   align-items: center;
 `;
 
-const SidebarImage = styled.img`
-  flex: 1;
-  font-size: 14px;
-  line-height: 1.4;
-  box-sizing: border-box;
-  border-style: none;
-  max-width: 65px;
-  max-height: 65px;
-  margin-left: 16px;
-  margin-right: 16px;
-  border-radius: 50%;
-  align-self: center;
-  margin-bottom: 0;
-`;
-
 const SidebarName = styled.div`
   flex: 1;
   line-height: 48px;

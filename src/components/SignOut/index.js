@@ -1,6 +1,5 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useUser } from "../../contexts/userContext";
 import firebase from "../../firebase/clientApp";
 import * as ROUTES from "../../constants/routes";
 
