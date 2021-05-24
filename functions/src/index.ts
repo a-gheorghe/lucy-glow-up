@@ -6,6 +6,8 @@ import * as mkdirp from "mkdirp";
 import * as fs from "fs";
 import { spawn } from "child-process-promise";
 
+admin.initializeApp();
+
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
