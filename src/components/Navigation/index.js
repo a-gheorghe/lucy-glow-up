@@ -35,6 +35,9 @@ const NavigationAuth = () => {
           <li>
             <Link to={ROUTES.DOGS}>Dogs</Link>
           </li>
+          <li>
+            <Link to={ROUTES.TRAINING}>Training</Link>
+          </li>
         </ul>
       </Drawer>
       <SimpleMenu />
@@ -89,6 +92,9 @@ const NavigationNonAuth = () => {
           </li>
           <li>
             <Link to={ROUTES.DOGS}>Dogs</Link>
+          </li>
+          <li>
+            <Link to={ROUTES.TRAINING}>Training</Link>
           </li>
         </ul>
       </Drawer>
