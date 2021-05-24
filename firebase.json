@@ -7,6 +7,11 @@
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "headers": [
+      {
+        "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+      }
     ]
   },
   "functions": {
